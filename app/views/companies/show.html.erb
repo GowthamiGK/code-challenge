@@ -6,12 +6,28 @@
     </div>
     <div class="col text-right">
       <%= link_to "Edit", edit_company_path %>
+      <%= link_to('Delete', @company, method: :delete, data: { confirm: 'Are you sure?' },
+      title: "Delete #{@company.name}") %>
     </div>
   </div>
-  <div class="bg-success">
+
+<!-- This part of the style could be movind to the new file -->  
+  <style> 
+    <% if @company.brand_color.present?%>
+        .brandColor { background-color:<%= @company.brand_color %>;}
+        <% else %>
+        .brandColor { background-color:green;}
+    <% end %>
+  </style>
+
+  <div class="brandColor">
     <div class="container p-5 text-white">
       <h1><%= @company.name %></h1>
-      <h3><mark>City, State</mark></h3>
+      <% if @company.city.present? && @company.state.present? %>
+        <h3><mark> <%= @company.city %>, <%= @company.state %></mark></h3>
+      <% else %>
+        <h3><mark> City, State</mark></h3>
+      <% end %>
       <pre><mark>☝️ This is what needs to be udpated. Examples: Atlanta, GA or Nashvile, TN</mark></pre>
     </div>
   </div>
@@ -36,7 +52,7 @@
     </div>
   </div>
 
-  <div class="bg-success text-white text-center py-3">
+  <div class=" text-white text-center py-3 brandColor">
     <p class="lead"><%= @company.phone %> — <%= @company.email %></p>
   </div>
 </div>
